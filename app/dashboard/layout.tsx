@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
   BookOpen,
@@ -13,35 +13,39 @@ import {
   Settings,
   LogOut,
   Sparkles,
-} from 'lucide-react';
-import { cn } from '@/lib/cn';
+} from "lucide-react";
+import { cn } from "@/lib/cn";
 
 const navItems = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/dashboard/knowledge', icon: BookOpen, label: 'Knowledge' },
-  { href: '/dashboard/chatbot', icon: MessageSquare, label: 'Chatbot' },
-  { href: '/dashboard/embed', icon: Barcode, label: 'Embed' },
-  { href: '/dashboard/analytics', icon: BarChart3, label: 'Analytics' },
-  { href: '/dashboard/billing', icon: CreditCard, label: 'Billing' },
-  { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
+  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+  { href: "/dashboard/knowledge", icon: BookOpen, label: "Knowledge" },
+  { href: "/dashboard/chatbot", icon: MessageSquare, label: "Chatbot" },
+  { href: "/dashboard/embed", icon: Barcode, label: "Embed" },
+  { href: "/dashboard/analytics", icon: BarChart3, label: "Analytics" },
+  { href: "/dashboard/billing", icon: CreditCard, label: "Billing" },
+  { href: "/dashboard/settings", icon: Settings, label: "Settings" },
 ];
 
 function getPageLabel(pathname: string) {
-  if (pathname === '/dashboard') return 'Overview';
+  if (pathname === "/dashboard") return "Overview";
   const item = navItems.find((navItem) => pathname.startsWith(navItem.href));
-  return item?.label ?? 'Workspace';
+  return item?.label ?? "Workspace";
 }
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const router = useRouter();
 
   async function handleLogout() {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      router.push('/');
+      await fetch("/api/auth/logout", { method: "POST" });
+      router.push("/");
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   }
 
@@ -63,16 +67,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive =
-                item.href === '/dashboard' ? pathname === item.href : pathname.startsWith(item.href + '/') || pathname === item.href;
+                item.href === "/dashboard"
+                  ? pathname === item.href
+                  : pathname.startsWith(item.href + "/") ||
+                    pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                    "flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors",
                     isActive
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-sm'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-sm"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white",
                   )}
                 >
                   <Icon className="w-4 h-4" />
@@ -100,36 +107,49 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/85 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/85">
           <div className="flex h-16 items-center justify-between px-5 sm:px-8">
             <div className="flex items-center gap-3">
-              <Link href="/dashboard" className="flex items-center gap-2 lg:hidden">
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 lg:hidden"
+              >
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-950 text-white dark:bg-white dark:text-slate-950">
                   <Sparkles className="h-4 w-4" />
                 </div>
                 <span className="font-semibold">Knowly</span>
               </Link>
               <span className="hidden h-5 w-px bg-slate-200 dark:bg-slate-800 lg:block" />
-              <span className="text-sm font-medium text-slate-500 dark:text-slate-400">{getPageLabel(pathname)}</span>
+              <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                {getPageLabel(pathname)}
+              </span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="hidden text-xs text-slate-500 sm:block">Workspace</span>
+              <span className="hidden text-xs text-slate-500 sm:block">
+                Workspace
+              </span>
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-xs font-semibold text-white dark:bg-white dark:text-slate-900">
                 K
               </div>
             </div>
           </div>
         </header>
-        <nav className="flex gap-1 overflow-x-auto border-b border-slate-200/80 bg-white px-4 py-2 lg:hidden dark:border-slate-800 dark:bg-slate-950" aria-label="Dashboard navigation">
+        <nav
+          className="flex gap-1 overflow-x-auto border-b border-slate-200/80 bg-white px-4 py-2 lg:hidden dark:border-slate-800 dark:bg-slate-950"
+          aria-label="Dashboard navigation"
+        >
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = item.href === '/dashboard' ? pathname === item.href : pathname.startsWith(item.href);
+            const isActive =
+              item.href === "/dashboard"
+                ? pathname === item.href
+                : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'flex shrink-0 items-center gap-2 rounded-md px-3 py-2 text-xs font-medium',
+                  "flex shrink-0 items-center gap-2 rounded-md px-3 py-2 text-xs font-medium",
                   isActive
-                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-                    : 'text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'
+                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+                    : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800",
                 )}
               >
                 <Icon className="h-3.5 w-3.5" />

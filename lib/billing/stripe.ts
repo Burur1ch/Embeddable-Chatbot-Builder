@@ -1,4 +1,4 @@
-import Stripe from 'stripe';
+import Stripe from "stripe";
 
 let stripeInstance: Stripe | null = null;
 
@@ -12,10 +12,12 @@ export function getStripeClient() {
   return stripeInstance;
 }
 
-export function getStripePriceId(plan: 'pro' | 'business') {
-  return plan === 'pro' ? process.env.STRIPE_PRICE_PRO : process.env.STRIPE_PRICE_BUSINESS;
+export function getStripePriceId(plan: "pro" | "business") {
+  return plan === "pro"
+    ? process.env.STRIPE_PRICE_PRO
+    : process.env.STRIPE_PRICE_BUSINESS;
 }
 
 export function getAppUrl() {
-  return process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+  return process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 }

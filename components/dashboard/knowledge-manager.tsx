@@ -1,30 +1,37 @@
-'use client';
+"use client";
 
-import { useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select } from '@/components/ui/select';
-import { Upload, FileText, Trash2, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
-import type { Chatbot, Document } from '@/lib/types';
-import { cn } from '@/lib/cn';
+import { useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select } from "@/components/ui/select";
+import {
+  Upload,
+  FileText,
+  Trash2,
+  CheckCircle2,
+  XCircle,
+  Loader2,
+} from "lucide-react";
+import type { Chatbot, Document } from "@/lib/types";
+import { cn } from "@/lib/cn";
 
-const STATUS_LABEL: Record<Document['status'], string> = {
-  uploading: 'Uploading...',
-  processing: 'Processing...',
-  indexing: 'Building knowledge index...',
-  ready: 'Ready',
+const STATUS_LABEL: Record<Document["status"], string> = {
+  uploading: "Uploading...",
+  processing: "Processing...",
+  indexing: "Building knowledge index...",
+  ready: "Ready",
   failed: "Couldn't process this document",
 };
 
-function StatusBadge({ status }: { status: Document['status'] }) {
-  if (status === 'ready') {
+function StatusBadge({ status }: { status: Document["status"] }) {
+  if (status === "ready") {
     return (
       <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700 dark:text-green-400">
         <CheckCircle2 className="w-3.5 h-3.5" /> {STATUS_LABEL[status]}
       </span>
     );
   }
-  if (status === 'failed') {
+  if (status === "failed") {
     return (
       <span className="inline-flex items-center gap-1 text-xs font-medium text-red-600 dark:text-red-400">
         <XCircle className="w-3.5 h-3.5" /> {STATUS_LABEL[status]}
@@ -51,13 +58,17 @@ export function KnowledgeManager({
   chatbots: Chatbot[];
   initialDocuments: Document[];
 }) {
-  const [selectedChatbotId, setSelectedChatbotId] = useState(chatbots[0]?.id ?? '');
+  const [selectedChatbotId, setSelectedChatbotId] = useState(
+    chatbots[0]?.id ?? "",
+  );
   const [documents, setDocuments] = useState(initialDocuments);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const visibleDocuments = documents.filter((d) => d.chatbot_id === selectedChatbotId);
+  const visibleDocuments = documents.filter(
+    (d) => d.chatbot_id === selectedChatbotId,
+  );
 
   async function refreshDocuments() {
     const res = await fetch(`/api/documents?chatbotId=${selectedChatbotId}`);
@@ -74,32 +85,35 @@ export function KnowledgeManager({
     const file = e.target.files?.[0];
     if (!file || !selectedChatbotId) return;
 
-    setError('');
+    setError("");
     setUploading(true);
 
     try {
       const formData = new FormData();
-      formData.append('file', file);
-      formData.append('chatbotId', selectedChatbotId);
+      formData.append("file", file);
+      formData.append("chatbotId", selectedChatbotId);
 
-      const res = await fetch('/api/documents/upload', { method: 'POST', body: formData });
+      const res = await fetch("/api/documents/upload", {
+        method: "POST",
+        body: formData,
+      });
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || 'Failed to upload document');
+        setError(data.error || "Failed to upload document");
       } else {
         await refreshDocuments();
       }
     } catch {
-      setError('Failed to upload document');
+      setError("Failed to upload document");
     } finally {
       setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   }
 
   async function handleDelete(id: string) {
-    const res = await fetch(`/api/documents/${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/documents/${id}`, { method: "DELETE" });
     if (res.ok) {
       setDocuments((prev) => prev.filter((d) => d.id !== id));
     }
@@ -110,12 +124,15 @@ export function KnowledgeManager({
       <div className="max-w-6xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Knowledge Base</h1>
-          <p className="text-slate-600 dark:text-slate-400">Upload and manage documents for your chatbot</p>
+          <p className="text-slate-600 dark:text-slate-400">
+            Upload and manage documents for your chatbot
+          </p>
         </div>
         <Card>
           <CardContent className="pt-12 pb-12 text-center">
             <p className="text-slate-600 dark:text-slate-400">
-              Create a chatbot first, then come back here to upload its knowledge.
+              Create a chatbot first, then come back here to upload its
+              knowledge.
             </p>
           </CardContent>
         </Card>
@@ -128,10 +145,15 @@ export function KnowledgeManager({
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-2">Knowledge Base</h1>
-          <p className="text-slate-600 dark:text-slate-400">Upload and manage documents for your chatbot</p>
+          <p className="text-slate-600 dark:text-slate-400">
+            Upload and manage documents for your chatbot
+          </p>
         </div>
         <div className="w-full sm:w-64">
-          <Select value={selectedChatbotId} onChange={(e) => setSelectedChatbotId(e.target.value)}>
+          <Select
+            value={selectedChatbotId}
+            onChange={(e) => setSelectedChatbotId(e.target.value)}
+          >
             {chatbots.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -153,17 +175,22 @@ export function KnowledgeManager({
           )}
           <label
             className={cn(
-              'flex flex-col items-center justify-center gap-2 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-10 cursor-pointer hover:border-slate-400 dark:hover:border-slate-500 transition-colors',
-              uploading && 'opacity-60 pointer-events-none'
+              "flex flex-col items-center justify-center gap-2 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-10 cursor-pointer hover:border-slate-400 dark:hover:border-slate-500 transition-colors",
+              uploading && "opacity-60 pointer-events-none",
             )}
           >
             {uploading ? (
-              <Loader2 className="w-6 h-6 animate-spin text-slate-400" aria-hidden="true" />
+              <Loader2
+                className="w-6 h-6 animate-spin text-slate-400"
+                aria-hidden="true"
+              />
             ) : (
               <Upload className="w-6 h-6 text-slate-400" aria-hidden="true" />
             )}
             <span className="text-sm font-medium" aria-live="polite">
-              {uploading ? 'Uploading and indexing...' : 'Click to upload PDF, TXT, or Markdown'}
+              {uploading
+                ? "Uploading and indexing..."
+                : "Click to upload PDF, TXT, or Markdown"}
             </span>
             <span className="text-xs text-slate-500">Max 10MB</span>
             <input
@@ -187,7 +214,8 @@ export function KnowledgeManager({
               </div>
               <h2 className="text-xl font-semibold mb-2">No documents yet</h2>
               <p className="text-slate-600 dark:text-slate-400 max-w-md">
-                Upload your PDFs, documentation, FAQs, and other knowledge sources to train your chatbot.
+                Upload your PDFs, documentation, FAQs, and other knowledge
+                sources to train your chatbot.
               </p>
             </div>
           </CardContent>
@@ -197,16 +225,22 @@ export function KnowledgeManager({
           <CardContent className="p-0">
             <ul className="divide-y divide-slate-200 dark:divide-slate-800">
               {visibleDocuments.map((doc) => (
-                <li key={doc.id} className="flex items-center justify-between gap-4 p-4">
+                <li
+                  key={doc.id}
+                  className="flex items-center justify-between gap-4 p-4"
+                >
                   <div className="flex items-center gap-3 min-w-0">
                     <FileText className="w-5 h-5 text-slate-400 flex-shrink-0" />
                     <div className="min-w-0">
                       <p className="font-medium truncate">{doc.filename}</p>
                       <p className="text-xs text-slate-500">
-                        {formatSize(doc.size)} · {new Date(doc.created_at).toLocaleDateString()}
+                        {formatSize(doc.size)} ·{" "}
+                        {new Date(doc.created_at).toLocaleDateString()}
                       </p>
-                      {doc.status === 'failed' && doc.error_message && (
-                        <p className="text-xs text-red-600 mt-1">{doc.error_message}</p>
+                      {doc.status === "failed" && doc.error_message && (
+                        <p className="text-xs text-red-600 mt-1">
+                          {doc.error_message}
+                        </p>
                       )}
                     </div>
                   </div>

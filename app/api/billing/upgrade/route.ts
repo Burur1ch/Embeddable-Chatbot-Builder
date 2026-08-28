@@ -1,11 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { createSupabaseServerClient } from '@/lib/supabase/server-client';
-import { mockChangePlan } from '@/lib/billing/mock-billing';
-import { getAppUrl, getStripeClient, getStripePriceId } from '@/lib/billing/stripe';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { createSupabaseServerClient } from "@/lib/supabase/server-client";
+import { mockChangePlan } from "@/lib/billing/mock-billing";
+import {
+  getAppUrl,
+  getStripeClient,
+  getStripePriceId,
+} from "@/lib/billing/stripe";
 
 const upgradeSchema = z.object({
-  plan: z.enum(['free', 'pro', 'business']),
+  plan: z.enum(["free", "pro", "business"]),
 });
 
 export async function POST(request: NextRequest) {
@@ -15,35 +19,43 @@ export async function POST(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await request.json();
   const parsed = upgradeSchema.safeParse(body);
 
   if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
+    return NextResponse.json(
+      { error: parsed.error.issues[0].message },
+      { status: 400 },
+    );
   }
 
   const { plan } = parsed.data;
 
-  if (plan !== 'free') {
+  if (plan !== "free") {
     const stripe = getStripeClient();
     const priceId = getStripePriceId(plan);
 
     if (stripe && priceId) {
       const { data: subscription } = await supabase
-        .from('subscriptions')
-        .select('stripe_customer_id, stripe_subscription_id')
-        .eq('user_id', user.id)
+        .from("subscriptions")
+        .select("stripe_customer_id, stripe_subscription_id")
+        .eq("user_id", user.id)
         .maybeSingle();
 
       if (subscription?.stripe_subscription_id) {
-        const currentSubscription = await stripe.subscriptions.retrieve(subscription.stripe_subscription_id);
+        const currentSubscription = await stripe.subscriptions.retrieve(
+          subscription.stripe_subscription_id,
+        );
         const currentItem = currentSubscription.items.data[0];
 
         if (!currentItem) {
-          return NextResponse.json({ error: 'Stripe subscription has no billing item' }, { status: 400 });
+          return NextResponse.json(
+            { error: "Stripe subscription has no billing item" },
+            { status: 400 },
+          );
         }
 
         await stripe.subscriptions.update(subscription.stripe_subscription_id, {
@@ -64,7 +76,7 @@ export async function POST(request: NextRequest) {
       }
 
       const session = await stripe.checkout.sessions.create({
-        mode: 'subscription',
+        mode: "subscription",
         customer: customerId,
         line_items: [{ price: priceId, quantity: 1 }],
         success_url: `${getAppUrl()}/dashboard/billing?checkout=success`,

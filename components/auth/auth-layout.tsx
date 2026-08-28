@@ -1,10 +1,13 @@
-import Link from 'next/link';
-import { Sparkles, Zap, Shield, BarChart3 } from 'lucide-react';
+import Link from "next/link";
+import { Sparkles, Zap, Shield, BarChart3 } from "lucide-react";
 
 const highlights = [
-  { icon: Zap, text: 'Turn your docs into an AI support agent in minutes' },
-  { icon: Shield, text: 'Your data stays private, secured with row-level access' },
-  { icon: BarChart3, text: 'Track usage and see exactly what customers ask' },
+  { icon: Zap, text: "Turn your docs into an AI support agent in minutes" },
+  {
+    icon: Shield,
+    text: "Your data stays private, secured with row-level access",
+  },
+  { icon: BarChart3, text: "Track usage and see exactly what customers ask" },
 ];
 
 export function AuthLayout({
@@ -24,7 +27,7 @@ export function AuthLayout({
           className="absolute inset-0 opacity-20"
           style={{
             backgroundImage:
-              'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.6) 0%, transparent 45%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 45%)',
+              "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.6) 0%, transparent 45%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 0%, transparent 45%)",
           }}
         />
         <div className="relative z-10 flex flex-col justify-between p-12 text-white w-full">
@@ -50,7 +53,9 @@ export function AuthLayout({
               ))}
             </ul>
           </div>
-          <p className="text-sm text-blue-100/80">© 2026 Knowly. All rights reserved.</p>
+          <p className="text-sm text-blue-100/80">
+            © 2026 Knowly. All rights reserved.
+          </p>
         </div>
       </div>
 

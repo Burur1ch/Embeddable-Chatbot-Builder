@@ -1,17 +1,25 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Zap, Lock, BarChart3, Sparkles, Rocket, Shield } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  Zap,
+  Lock,
+  BarChart3,
+  Sparkles,
+  Rocket,
+  Shield,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -23,14 +31,24 @@ export default function Home() {
             <div className="w-9 h-9 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-lg bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Knowly</span>
+            <span className="font-bold text-lg bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Knowly
+            </span>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition">
+            <Link
+              href="/login"
+              className="text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition"
+            >
               Sign In
             </Link>
             <Link href="/signup">
-              <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all">Get Started</Button>
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-md hover:shadow-lg transition-all"
+              >
+                Get Started
+              </Button>
             </Link>
           </div>
         </div>
@@ -44,7 +62,7 @@ export default function Home() {
           style={{
             backgroundImage: "url('/hero-bg.svg')",
             transform: `translateY(${scrollY * 0.35}px) scale(1.1)`,
-            transition: 'transform 0.1s ease-out',
+            transition: "transform 0.1s ease-out",
           }}
         />
         {/* Dark overlay for text contrast */}
@@ -52,30 +70,38 @@ export default function Home() {
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="inline-block mb-6 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-            <span className="text-sm font-semibold text-white">✨ AI-Powered Knowledge Assistant</span>
-          </div>
-          
-          <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight">
-            <span className="text-white">
-              Turn Your Company Knowledge Into
+            <span className="text-sm font-semibold text-white">
+              ✨ AI-Powered Knowledge Assistant
             </span>
+          </div>
+
+          <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight">
+            <span className="text-white">Turn Your Company Knowledge Into</span>
             <br />
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               An AI Support Agent
             </span>
           </h1>
-          
+
           <p className="text-xl sm:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Upload your docs, connect your knowledge, and give your customers instant answers — anywhere, anytime.
+            Upload your docs, connect your knowledge, and give your customers
+            instant answers — anywhere, anytime.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Link href="/signup">
-              <Button size="lg" className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all px-8 py-6 text-lg rounded-xl">
+              <Button
+                size="lg"
+                className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all px-8 py-6 text-lg rounded-xl"
+              >
                 Start for Free <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="border-2 border-white/40 bg-white/5 text-white hover:bg-white/15 hover:border-white/60 backdrop-blur-sm rounded-xl px-8 py-6 text-lg font-medium">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-2 border-white/40 bg-white/5 text-white hover:bg-white/15 hover:border-white/60 backdrop-blur-sm rounded-xl px-8 py-6 text-lg font-medium"
+            >
               Watch Demo
             </Button>
           </div>
@@ -85,9 +111,9 @@ export default function Home() {
             <div>
               <div className="text-3xl font-bold text-blue-400">10K+</div>
               <p className="text-sm text-slate-300 mt-1">Active Users</p>
-            <div className="border-t border-slate-200 dark:border-slate-800 pt-8 text-center text-sm text-slate-600 dark:text-slate-400">
-              <p>© 2026 Knowly. All rights reserved.</p>
-            </div>
+              <div className="border-t border-slate-200 dark:border-slate-800 pt-8 text-center text-sm text-slate-600 dark:text-slate-400">
+                <p>© 2026 Knowly. All rights reserved.</p>
+              </div>
             </div>
             <div>
               <div className="text-3xl font-bold text-purple-400">99.9%</div>
@@ -108,7 +134,7 @@ export default function Home() {
       {/* Features Section with Parallax */}
       <section className="relative isolate py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-slate-900/50 dark:to-slate-950">
         {/* Parallax Background */}
-        <div 
+        <div
           className="absolute inset-0 -z-10"
           style={{
             backgroundImage: `
@@ -125,7 +151,8 @@ export default function Home() {
               Everything you need to succeed
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Built for teams who want to scale support without scaling their team.
+              Built for teams who want to scale support without scaling their
+              team.
             </p>
           </div>
 
@@ -138,7 +165,10 @@ export default function Home() {
                   <Rocket className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Lightning Fast Setup</h3>
-                <p className="text-slate-600 dark:text-slate-400">Upload your documents and train an AI chatbot in just minutes. No complex configuration needed.</p>
+                <p className="text-slate-600 dark:text-slate-400">
+                  Upload your documents and train an AI chatbot in just minutes.
+                  No complex configuration needed.
+                </p>
               </div>
             </div>
 
@@ -150,7 +180,10 @@ export default function Home() {
                   <Shield className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Enterprise Security</h3>
-                <p className="text-slate-600 dark:text-slate-400">Your data stays private with end-to-end encryption and SOC 2 compliance. No third-party access ever.</p>
+                <p className="text-slate-600 dark:text-slate-400">
+                  Your data stays private with end-to-end encryption and SOC 2
+                  compliance. No third-party access ever.
+                </p>
               </div>
             </div>
 
@@ -162,7 +195,10 @@ export default function Home() {
                   <BarChart3 className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Deep Analytics</h3>
-                <p className="text-slate-600 dark:text-slate-400">Track conversations, understand customer needs, and continuously improve your AI assistant&apos;s responses.</p>
+                <p className="text-slate-600 dark:text-slate-400">
+                  Track conversations, understand customer needs, and
+                  continuously improve your AI assistant&apos;s responses.
+                </p>
               </div>
             </div>
           </div>
@@ -173,14 +209,18 @@ export default function Home() {
               <Zap className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">Instant Integration</h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Embed with just one line of code</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Embed with just one line of code
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-4 p-6 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
               <Lock className="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" />
               <div>
                 <h4 className="font-semibold mb-1">AI-Powered Responses</h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Uses latest GPT models for accuracy</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Uses latest GPT models for accuracy
+                </p>
               </div>
             </div>
           </div>
@@ -190,7 +230,7 @@ export default function Home() {
       {/* Pricing Section with Parallax */}
       <section className="relative isolate py-20 lg:py-32 overflow-hidden">
         {/* Parallax Background */}
-        <div 
+        <div
           className="absolute inset-0 -z-10"
           style={{
             backgroundImage: `
@@ -203,8 +243,12 @@ export default function Home() {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-6">Simple, Transparent Pricing</h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400">Start free, upgrade as you grow</p>
+            <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-xl text-slate-600 dark:text-slate-400">
+              Start free, upgrade as you grow
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -214,7 +258,9 @@ export default function Home() {
                 <h3 className="text-2xl font-bold mb-2">Free</h3>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-bold">$0</span>
-                  <span className="text-slate-600 dark:text-slate-400">/month</span>
+                  <span className="text-slate-600 dark:text-slate-400">
+                    /month
+                  </span>
                 </div>
               </div>
               <ul className="space-y-4 mb-8">
@@ -237,7 +283,10 @@ export default function Home() {
                   100 Questions/Month
                 </li>
               </ul>
-              <Button variant="outline" className="w-full border-slate-300 dark:border-slate-600 rounded-lg">
+              <Button
+                variant="outline"
+                className="w-full border-slate-300 dark:border-slate-600 rounded-lg"
+              >
                 Get Started
               </Button>
             </div>
@@ -245,13 +294,19 @@ export default function Home() {
             {/* Pro Plan - Highlighted */}
             <div className="relative rounded-2xl p-8 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-2 border-blue-400 dark:border-purple-600 hover:shadow-2xl transition-all hover:scale-110 duration-300">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold">MOST POPULAR</span>
+                <span className="px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold">
+                  MOST POPULAR
+                </span>
               </div>
               <div className="mb-6 pt-4">
                 <h3 className="text-2xl font-bold mb-2">Pro</h3>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">$19</span>
-                  <span className="text-slate-600 dark:text-slate-400">/month</span>
+                  <span className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    $19
+                  </span>
+                  <span className="text-slate-600 dark:text-slate-400">
+                    /month
+                  </span>
                 </div>
               </div>
               <ul className="space-y-4 mb-8">
@@ -285,7 +340,9 @@ export default function Home() {
                 <h3 className="text-2xl font-bold mb-2">Business</h3>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-bold">$49</span>
-                  <span className="text-slate-600 dark:text-slate-400">/month</span>
+                  <span className="text-slate-600 dark:text-slate-400">
+                    /month
+                  </span>
                 </div>
               </div>
               <ul className="space-y-4 mb-8">
@@ -308,7 +365,10 @@ export default function Home() {
                   10,000 Questions/Month
                 </li>
               </ul>
-              <Button variant="outline" className="w-full border-slate-300 dark:border-slate-600 rounded-lg">
+              <Button
+                variant="outline"
+                className="w-full border-slate-300 dark:border-slate-600 rounded-lg"
+              >
                 Contact Sales
               </Button>
             </div>
@@ -318,7 +378,7 @@ export default function Home() {
 
       {/* CTA Section with Parallax */}
       <section className="relative isolate py-20 lg:py-24 overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-        <div 
+        <div
           className="absolute inset-0 opacity-10"
           style={{
             backgroundImage: `
@@ -330,10 +390,18 @@ export default function Home() {
         />
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">Ready to transform your support?</h2>
-          <p className="text-xl text-blue-100 mb-10">Join thousands of companies delivering instant, accurate support with AI.</p>
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+            Ready to transform your support?
+          </h2>
+          <p className="text-xl text-blue-100 mb-10">
+            Join thousands of companies delivering instant, accurate support
+            with AI.
+          </p>
           <Link href="/signup">
-            <Button size="lg" className="bg-white text-blue-600 hover:bg-slate-100 shadow-lg hover:shadow-xl px-8 py-6 text-lg rounded-xl font-semibold transition-all">
+            <Button
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-slate-100 shadow-lg hover:shadow-xl px-8 py-6 text-lg rounded-xl font-semibold transition-all"
+            >
               Start for Free — No Card Required
             </Button>
           </Link>
@@ -349,32 +417,99 @@ export default function Home() {
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Knowly</span>
+                <span className="font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Knowly
+                </span>
               </div>
-              <p className="text-sm text-slate-600 dark:text-slate-400">Turn your knowledge into an AI support agent.</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Turn your knowledge into an AI support agent.
+              </p>
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-sm">Product</h4>
               <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                <li><Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400">Features</Link></li>
-                <li><Link href="/pricing" className="hover:text-blue-600 dark:hover:text-blue-400">Pricing</Link></li>
-                <li><Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400">Documentation</Link></li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/pricing"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Pricing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Documentation
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-sm">Company</h4>
               <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                <li><Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400">About</Link></li>
-                <li><Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400">Blog</Link></li>
-                <li><Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400">Contact</Link></li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Contact
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4 text-sm">Legal</h4>
               <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                <li><Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400">Privacy</Link></li>
-                <li><Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400">Terms</Link></li>
-                <li><Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400">Security</Link></li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Privacy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Terms
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                  >
+                    Security
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

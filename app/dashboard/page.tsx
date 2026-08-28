@@ -1,10 +1,24 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, MessageSquare, FileText, HelpCircle, Sparkles, Activity, Plus } from 'lucide-react';
-import Link from 'next/link';
-import { requireUser } from '@/lib/auth';
-import { createSupabaseServerClient } from '@/lib/supabase/server-client';
-import { getUserPlanUsage, getPlanConfig } from '@/lib/billing/usage';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  MessageSquare,
+  FileText,
+  HelpCircle,
+  Sparkles,
+  Activity,
+  Plus,
+} from "lucide-react";
+import Link from "next/link";
+import { requireUser } from "@/lib/auth";
+import { createSupabaseServerClient } from "@/lib/supabase/server-client";
+import { getUserPlanUsage, getPlanConfig } from "@/lib/billing/usage";
 
 export default async function Dashboard() {
   const user = await requireUser();
@@ -13,10 +27,10 @@ export default async function Dashboard() {
   const planConfig = getPlanConfig(usage.plan);
 
   const { data: recentChatbots } = await supabase
-    .from('chatbots')
-    .select('id, name, created_at')
-    .eq('user_id', user.id)
-    .order('created_at', { ascending: false })
+    .from("chatbots")
+    .select("id, name, created_at")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
     .limit(5);
 
   return (
@@ -24,9 +38,15 @@ export default async function Dashboard() {
       {/* Header */}
       <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Workspace overview</p>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl">Welcome back</h1>
-          <p className="mt-2 text-slate-600 dark:text-slate-400">Here is what is happening with your AI support team.</p>
+          <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+            Workspace overview
+          </p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
+            Welcome back
+          </h1>
+          <p className="mt-2 text-slate-600 dark:text-slate-400">
+            Here is what is happening with your AI support team.
+          </p>
         </div>
         <Link href="/dashboard/chatbot">
           <Button className="gap-2 shadow-sm">
@@ -43,9 +63,14 @@ export default async function Dashboard() {
               <MessageSquare className="w-4.5 h-4.5 text-white" />
             </div>
             <div className="text-3xl font-bold mb-1">
-              {usage.chatbotsCreated} <span className="text-lg text-slate-400 font-normal">/ {planConfig.chatbots}</span>
+              {usage.chatbotsCreated}{" "}
+              <span className="text-lg text-slate-400 font-normal">
+                / {planConfig.chatbots}
+              </span>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-400">Chatbots</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              Chatbots
+            </p>
           </CardContent>
         </Card>
         <Card className="group overflow-hidden border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-shadow hover:shadow-[0_12px_35px_rgba(15,23,42,0.08)]">
@@ -54,9 +79,14 @@ export default async function Dashboard() {
               <FileText className="w-4.5 h-4.5 text-white" />
             </div>
             <div className="text-3xl font-bold mb-1">
-              {usage.documentsUsed} <span className="text-lg text-slate-400 font-normal">/ {planConfig.documents}</span>
+              {usage.documentsUsed}{" "}
+              <span className="text-lg text-slate-400 font-normal">
+                / {planConfig.documents}
+              </span>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-400">Documents</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              Documents
+            </p>
           </CardContent>
         </Card>
         <Card className="group overflow-hidden border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-shadow hover:shadow-[0_12px_35px_rgba(15,23,42,0.08)]">
@@ -65,10 +95,14 @@ export default async function Dashboard() {
               <HelpCircle className="w-4.5 h-4.5 text-white" />
             </div>
             <div className="text-3xl font-bold mb-1">
-              {usage.questionsUsedThisMonth}{' '}
-              <span className="text-lg text-slate-400 font-normal">/ {planConfig.questionsPerMonth}</span>
+              {usage.questionsUsedThisMonth}{" "}
+              <span className="text-lg text-slate-400 font-normal">
+                / {planConfig.questionsPerMonth}
+              </span>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-400">Questions this month</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              Questions this month
+            </p>
           </CardContent>
         </Card>
         <Card className="group overflow-hidden border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-shadow hover:shadow-[0_12px_35px_rgba(15,23,42,0.08)]">
@@ -77,7 +111,9 @@ export default async function Dashboard() {
               <Sparkles className="w-4.5 h-4.5 text-white" />
             </div>
             <div className="text-3xl font-bold mb-1">{planConfig.name}</div>
-            <p className="text-sm text-slate-600 dark:text-slate-400">Current Plan</p>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              Current Plan
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -87,7 +123,9 @@ export default async function Dashboard() {
         <Card>
           <CardHeader>
             <CardTitle>Get Started</CardTitle>
-            <CardDescription>Upload your first document and create a chatbot</CardDescription>
+            <CardDescription>
+              Upload your first document and create a chatbot
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -108,21 +146,30 @@ export default async function Dashboard() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Activity className="h-4 w-4 text-indigo-600" /> Recent Activity</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <Activity className="h-4 w-4 text-indigo-600" /> Recent Activity
+            </CardTitle>
             <CardDescription>Your latest actions</CardDescription>
           </CardHeader>
           <CardContent>
             {recentChatbots && recentChatbots.length > 0 ? (
               <ul className="space-y-3">
                 {recentChatbots.map((c) => (
-                  <li key={c.id} className="flex items-center justify-between text-sm">
+                  <li
+                    key={c.id}
+                    className="flex items-center justify-between text-sm"
+                  >
                     <span className="font-medium">{c.name}</span>
-                    <span className="text-slate-500">{new Date(c.created_at).toLocaleDateString()}</span>
+                    <span className="text-slate-500">
+                      {new Date(c.created_at).toLocaleDateString()}
+                    </span>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-slate-600 dark:text-slate-400">No recent activity yet.</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                No recent activity yet.
+              </p>
             )}
           </CardContent>
         </Card>
