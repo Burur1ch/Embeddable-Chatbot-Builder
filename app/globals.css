@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: white;
+  --color-foreground: rgb(10 10 10);
+  --color-primary: rgb(15 23 42);
+  --color-primary-foreground: white;
+  --color-secondary: rgb(241 245 249);
+  --color-secondary-foreground: rgb(15 23 42);
+  --color-muted: rgb(226 232 240);
+  --color-muted-foreground: rgb(100 116 139);
+  --color-accent: rgb(15 23 42);
+  --color-accent-foreground: white;
+  --color-destructive: rgb(220 38 38);
+  --color-destructive-foreground: white;
+  --color-border: rgb(226 232 240);
+  --color-input: rgb(226 232 240);
+  --color-card: white;
+  --color-card-foreground: rgb(10 10 10);
+  --color-ring: rgb(15 23 42);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme inline {
+    --color-background: rgb(10 10 10);
+    --color-foreground: rgb(245 245 245);
+    --color-primary: rgb(241 245 249);
+    --color-primary-foreground: rgb(15 23 42);
+    --color-secondary: rgb(30 41 59);
+    --color-secondary-foreground: rgb(241 245 245);
+    --color-muted: rgb(30 41 59);
+    --color-muted-foreground: rgb(148 163 184);
+    --color-accent: rgb(241 245 249);
+    --color-accent-foreground: rgb(15 23 42);
+    --color-border: rgb(30 41 59);
+    --color-input: rgb(30 41 59);
+    --color-card: rgb(10 10 10);
+    --color-card-foreground: rgb(245 245 245);
+    --color-ring: rgb(203 213 225);
+  }
+}
+
+* {
+  @apply border-border;
+}
+
+body {
+  @apply bg-background text-foreground;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
