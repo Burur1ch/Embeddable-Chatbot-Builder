@@ -54,86 +54,185 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section with Background Image + Parallax */}
-      <section className="relative isolate w-full overflow-hidden py-24 lg:py-40">
-        {/* Background Image - Parallax */}
+      {/* Hero Section */}
+      <section className="relative isolate w-full overflow-hidden py-24 lg:py-32">
         <div
-          className="absolute inset-0 -z-20 bg-cover bg-center"
+          className="absolute inset-0 -z-20"
           style={{
-            backgroundImage: "url('/hero-bg.svg')",
-            transform: `translateY(${scrollY * 0.35}px) scale(1.1)`,
-            transition: "transform 0.1s ease-out",
+            background:
+              "radial-gradient(circle at 20% 18%, rgba(34,211,238,0.22), transparent 28%), radial-gradient(circle at 78% 28%, rgba(168,85,247,0.22), transparent 32%), radial-gradient(circle at 58% 82%, rgba(244,114,182,0.18), transparent 30%), linear-gradient(120deg, #0b1125 0%, #111d44 26%, #22163d 58%, #491b51 100%)",
+            transform: `translateY(${scrollY * 0.25}px) scale(1.05)`,
+            transition: "transform 0.12s ease-out",
           }}
         />
-        {/* Dark overlay for text contrast */}
-        <div className="absolute inset-0 -z-10 bg-slate-950/55" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-b from-transparent to-[#f7f3ff]" />
+        <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-violet-500/10 blur-3xl" />
+        <div className="absolute -right-16 bottom-8 h-80 w-80 rounded-full bg-pink-500/10 blur-3xl" />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="inline-block mb-6 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-            <span className="text-sm font-semibold text-white">
-              ✨ AI-Powered Knowledge Assistant
+        <div className="relative z-10 mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-2 shadow-[0_0_30px_rgba(167,139,250,0.15)] backdrop-blur-sm">
+            <Sparkles className="h-4 w-4 text-violet-200" />
+            <span className="text-sm font-semibold text-white/90">
+              AI-powered knowledge assistant
             </span>
           </div>
 
-          <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight">
-            <span className="text-white">Turn Your Company Knowledge Into</span>
-            <br />
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              An AI Support Agent
+          <h1 className="mx-auto max-w-5xl text-5xl font-black tracking-[-0.07em] text-white sm:text-6xl lg:text-[7rem] lg:leading-[0.92]">
+            Turn your company
+            <span className="mt-2 block">knowledge into</span>
+            <span className="mt-2 block bg-gradient-to-r from-[#a5b4fc] via-[#d7a5ff] to-[#f7a8d8] bg-clip-text text-transparent">
+              an AI support agent
             </span>
           </h1>
 
-          <p className="text-xl sm:text-2xl text-slate-200 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Upload your docs, connect your knowledge, and give your customers
-            instant answers — anywhere, anytime.
+          <p className="mx-auto mt-8 max-w-3xl text-lg text-slate-200 sm:text-2xl">
+            Upload your docs, connect your internal knowledge, and give
+            customers instant answers — wherever they are, whenever they ask.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link href="/signup">
               <Button
                 size="lg"
-                className="gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all px-8 py-6 text-lg rounded-xl"
+                className="gap-2 rounded-2xl bg-gradient-to-r from-violet-500 via-indigo-500 to-purple-600 px-8 py-6 text-base font-semibold text-white shadow-[0_18px_40px_rgba(99,102,241,0.35)] transition hover:brightness-110"
               >
-                Start for Free <ArrowRight className="w-5 h-5" />
+                Start for free <ArrowRight className="h-5 w-5" />
               </Button>
             </Link>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-2 border-white/40 bg-white/5 text-white hover:bg-white/15 hover:border-white/60 backdrop-blur-sm rounded-xl px-8 py-6 text-lg font-medium"
-            >
-              Watch Demo
-            </Button>
+            <Link href="/pricing">
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-2xl border border-white/20 bg-white/6 px-8 py-6 text-base font-semibold text-white shadow-[0_12px_30px_rgba(15,23,42,0.25)] backdrop-blur-sm hover:bg-white/10"
+              >
+                View pricing
+              </Button>
+            </Link>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center max-w-2xl mx-auto pt-8 border-t border-white/15">
-            <div>
-              <div className="text-3xl font-bold text-blue-400">10K+</div>
-              <p className="text-sm text-slate-300 mt-1">Active Users</p>
-              <div className="border-t border-slate-200 dark:border-slate-800 pt-8 text-center text-sm text-slate-600 dark:text-slate-400">
-                <p>© 2026 Knowly. All rights reserved.</p>
+          <div className="relative mx-auto mt-16 max-w-5xl">
+            <div className="rounded-[32px] border border-white/10 bg-white/5 p-3 shadow-[0_30px_80px_rgba(15,23,42,0.45)] backdrop-blur-sm md:p-5">
+              <div className="grid gap-4 rounded-[24px] border border-white/10 bg-[#0b1632]/80 p-4 text-left md:grid-cols-[1.35fr_0.65fr] md:p-6">
+                <div className="rounded-[20px] border border-white/10 bg-[#121d3d]/80 p-4">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 text-sm font-bold text-white">
+                        K
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-white">
+                          Knowledge base
+                        </p>
+                        <p className="text-xs text-slate-400">
+                          Support workspace
+                        </p>
+                      </div>
+                    </div>
+                    <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-300">
+                      live
+                    </span>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-white/8 px-4 py-3 text-sm text-slate-200 shadow-inner shadow-slate-900/20">
+                      <div className="mb-1 flex items-center gap-2">
+                        <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-300">
+                          Knowly • company assistant
+                        </span>
+                      </div>
+                      Hi! I can answer questions using your uploaded docs,
+                      policies, and internal knowledge base.
+                    </div>
+                    <div className="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-gradient-to-r from-violet-500 via-indigo-500 to-cyan-500 px-4 py-3 text-sm text-white shadow-lg shadow-violet-500/25">
+                      Where can I find the onboarding checklist for new hires?
+                    </div>
+                    <div className="max-w-[85%] rounded-2xl rounded-bl-md bg-white/8 px-4 py-3 text-sm text-slate-200 shadow-inner shadow-slate-900/20">
+                      It’s in the People Ops guide. New hires should complete
+                      the setup steps in the onboarding packet and submit their
+                      equipment request by day 2.
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="rounded-[20px] border border-violet-400/20 bg-gradient-to-br from-violet-500/15 to-indigo-500/10 p-4">
+                    <p className="text-xs uppercase tracking-[0.22em] text-violet-200">
+                      Coverage
+                    </p>
+                    <div className="mt-3 text-3xl font-black tracking-[-0.05em] text-white">
+                      92%
+                    </div>
+                    <p className="mt-1 text-sm text-slate-300">
+                      Resolved without human handoff
+                    </p>
+                  </div>
+
+                  <div className="rounded-[20px] border border-white/10 bg-[#121d3d]/80 p-4">
+                    <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+                      Sources indexed
+                    </p>
+                    <ul className="mt-3 space-y-3 text-sm text-slate-200">
+                      <li className="flex items-center justify-between rounded-xl border border-white/8 bg-white/5 px-3 py-2">
+                        <span>Docs</span>
+                        <span className="font-semibold text-violet-300">
+                          128
+                        </span>
+                      </li>
+                      <li className="flex items-center justify-between rounded-xl border border-white/8 bg-white/5 px-3 py-2">
+                        <span>Guides</span>
+                        <span className="font-semibold text-violet-300">
+                          54
+                        </span>
+                      </li>
+                      <li className="flex items-center justify-between rounded-xl border border-white/8 bg-white/5 px-3 py-2">
+                        <span>FAQs</span>
+                        <span className="font-semibold text-violet-300">
+                          24
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+
+          <div className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-6 border-t border-white/10 pt-8 text-center sm:grid-cols-4">
             <div>
-              <div className="text-3xl font-bold text-purple-400">99.9%</div>
-              <p className="text-sm text-slate-300 mt-1">Uptime</p>
+              <div className="text-3xl font-black tracking-[-0.05em] text-violet-300">
+                10K+
+              </div>
+              <p className="mt-2 text-sm text-slate-300">Active users</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-pink-400">1M+</div>
-              <p className="text-sm text-slate-300 mt-1">Messages</p>
+              <div className="text-3xl font-black tracking-[-0.05em] text-violet-300">
+                99.9%
+              </div>
+              <p className="mt-2 text-sm text-slate-300">Uptime</p>
             </div>
             <div>
-              <div className="text-3xl font-bold text-blue-300">2h</div>
-              <p className="text-sm text-slate-300 mt-1">Setup Time</p>
+              <div className="text-3xl font-black tracking-[-0.05em] text-violet-300">
+                1M+
+              </div>
+              <p className="mt-2 text-sm text-slate-300">Messages</p>
             </div>
+            <div>
+              <div className="text-3xl font-black tracking-[-0.05em] text-violet-300">
+                2h
+              </div>
+              <p className="mt-2 text-sm text-slate-300">Setup time</p>
+            </div>
+          </div>
+
+          <div className="mt-10 text-sm text-slate-400">
+            © 2026 Knowly. All rights reserved.
           </div>
         </div>
       </section>
 
-      {/* Features Section with Parallax */}
-      <section className="relative isolate py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-slate-900/50 dark:to-slate-950">
-        {/* Parallax Background */}
+      {/* Features Section */}
+      <section className="relative isolate overflow-hidden bg-gradient-to-b from-slate-50 to-white py-20 lg:py-32">
         <div
           className="absolute inset-0 -z-10"
           style={{
@@ -145,81 +244,87 @@ export default function Home() {
           }}
         />
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-              Everything you need to succeed
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 text-center">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-violet-600">
+              Why teams choose Knowly
+            </p>
+            <h2 className="text-4xl font-black tracking-[-0.05em] text-slate-950 sm:text-5xl">
+              Everything you need to automate support
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Built for teams who want to scale support without scaling their
-              team.
+            <p className="mx-auto mt-5 max-w-2xl text-xl text-slate-600">
+              Built for teams who want to ship better customer support without
+              managing another bottleneck.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="group relative rounded-2xl p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 hover:border-blue-400 dark:hover:border-blue-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-50/50 to-transparent dark:from-blue-900/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Rocket className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Lightning Fast Setup</h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Upload your documents and train an AI chatbot in just minutes.
-                  No complex configuration needed.
-                </p>
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="group rounded-[28px] border border-violet-100 bg-white p-8 shadow-[0_20px_50px_rgba(120,96,78,0.06)] transition hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(79,70,229,0.08)]">
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 text-white shadow-lg shadow-violet-500/20">
+                <Rocket className="h-7 w-7" />
               </div>
+              <h3 className="mb-3 text-2xl font-bold text-slate-900">
+                Deploy in minutes
+              </h3>
+              <p className="text-slate-600">
+                Upload docs, connect your knowledge base, and your AI agent is
+                ready to answer support questions instantly.
+              </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="group relative rounded-2xl p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 hover:border-purple-400 dark:hover:border-purple-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-50/50 to-transparent dark:from-purple-900/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Shield className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Enterprise Security</h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Your data stays private with end-to-end encryption and SOC 2
-                  compliance. No third-party access ever.
-                </p>
+            <div className="group rounded-[28px] border border-violet-100 bg-white p-8 shadow-[0_20px_50px_rgba(120,96,78,0.06)] transition hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(79,70,229,0.08)]">
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/20">
+                <Shield className="h-7 w-7" />
               </div>
+              <h3 className="mb-3 text-2xl font-bold text-slate-900">
+                Private by default
+              </h3>
+              <p className="text-slate-600">
+                Your data stays protected in a controlled environment with
+                precise access and enterprise-grade safeguards.
+              </p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="group relative rounded-2xl p-8 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 hover:border-pink-400 dark:hover:border-pink-600 transition-all hover:shadow-xl hover:-translate-y-1 duration-300">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-pink-50/50 to-transparent dark:from-pink-900/10 dark:to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <BarChart3 className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Deep Analytics</h3>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Track conversations, understand customer needs, and
-                  continuously improve your AI assistant&apos;s responses.
-                </p>
+            <div className="group rounded-[28px] border border-violet-100 bg-white p-8 shadow-[0_20px_50px_rgba(120,96,78,0.06)] transition hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(79,70,229,0.08)]">
+              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 to-violet-500 text-white shadow-lg shadow-pink-500/20">
+                <BarChart3 className="h-7 w-7" />
               </div>
+              <h3 className="mb-3 text-2xl font-bold text-slate-900">
+                Track what matters
+              </h3>
+              <p className="text-slate-600">
+                See which questions are resolved, where the knowledge gaps are,
+                and how your assistant improves over time.
+              </p>
             </div>
           </div>
 
-          {/* Additional Features Grid */}
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="flex items-start gap-4 p-6 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
-              <Zap className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+          <div className="mt-16 grid gap-6 sm:grid-cols-2">
+            <div className="flex items-start gap-4 rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mt-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-violet-700">
+                <Zap className="h-5 w-5" />
+              </div>
               <div>
-                <h4 className="font-semibold mb-1">Instant Integration</h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Embed with just one line of code
+                <h4 className="text-lg font-semibold text-slate-900">
+                  Instant answers
+                </h4>
+                <p className="mt-1 text-slate-600">
+                  Embed your assistant into any page and answer support
+                  questions instantly.
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4 p-6 rounded-xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50">
-              <Lock className="w-6 h-6 text-purple-600 flex-shrink-0 mt-1" />
+            <div className="flex items-start gap-4 rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mt-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-700">
+                <Lock className="h-5 w-5" />
+              </div>
               <div>
-                <h4 className="font-semibold mb-1">AI-Powered Responses</h4>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Uses latest GPT models for accuracy
+                <h4 className="text-lg font-semibold text-slate-900">
+                  Secure knowledge layer
+                </h4>
+                <p className="mt-1 text-slate-600">
+                  Only the content you upload becomes part of the AI knowledge
+                  model.
                 </p>
               </div>
             </div>
@@ -227,184 +332,178 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing Section with Parallax */}
-      <section className="relative isolate py-20 lg:py-32 overflow-hidden">
-        {/* Parallax Background */}
+      {/* Pricing Section */}
+      <section className="relative isolate overflow-hidden py-20 lg:py-32">
         <div
           className="absolute inset-0 -z-10"
           style={{
             backgroundImage: `
-              radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)
+              radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%)
             `,
             transform: `translateY(${scrollY * 0.4}px)`,
           }}
         />
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-6">
-              Simple, Transparent Pricing
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-16 text-center">
+            <p className="mb-4 text-lg font-semibold uppercase tracking-[0.22em] text-violet-600">
+              Pricing
+            </p>
+            <h2 className="text-4xl font-black tracking-[-0.05em] text-white sm:text-5xl">
+              Start simple, scale when needed
             </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400">
-              Start free, upgrade as you grow
+            <p className="mx-auto mt-5 max-w-2xl text-xl text-slate-600">
+              Transparent plans for teams that want an AI support layer without
+              the operational overhead.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Free Plan */}
-            <div className="rounded-2xl p-8 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 hover:shadow-xl transition-all hover:scale-105 duration-300">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-2">Free</h3>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-bold">$0</span>
-                  <span className="text-slate-600 dark:text-slate-400">
-                    /month
-                  </span>
-                </div>
-              </div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-sm">
-                  <span className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-green-600 rounded-full" />
-                  </span>
-                  1 Chatbot
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <span className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-green-600 rounded-full" />
-                  </span>
-                  10 Documents
-                </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <span className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-green-600 rounded-full" />
-                  </span>
-                  100 Questions/Month
-                </li>
-              </ul>
-              <Button
-                variant="outline"
-                className="w-full border-slate-300 dark:border-slate-600 rounded-lg"
-              >
-                Get Started
-              </Button>
-            </div>
-
-            {/* Pro Plan - Highlighted */}
-            <div className="relative rounded-2xl p-8 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-2 border-blue-400 dark:border-purple-600 hover:shadow-2xl transition-all hover:scale-110 duration-300">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold">
-                  MOST POPULAR
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_20px_50px_rgba(120,96,78,0.06)]">
+              <h3 className="text-2xl font-bold text-slate-900">Free</h3>
+              <div className="mt-6 flex items-end gap-2">
+                <span className="text-5xl font-black tracking-[-0.05em] text-slate-950">
+                  $0
                 </span>
+                <span className="pb-2 text-slate-500">/month</span>
               </div>
-              <div className="mb-6 pt-4">
-                <h3 className="text-2xl font-bold mb-2">Pro</h3>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    $19
+              <ul className="mt-8 space-y-4 text-sm text-slate-600">
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                    ✓
                   </span>
-                  <span className="text-slate-600 dark:text-slate-400">
-                    /month
-                  </span>
-                </div>
-              </div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-sm font-medium">
-                  <span className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-200 to-purple-200 dark:from-blue-800 dark:to-purple-800 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
-                  </span>
-                  5 Chatbots
+                  1 chatbot
                 </li>
-                <li className="flex items-center gap-3 text-sm font-medium">
-                  <span className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-200 to-purple-200 dark:from-blue-800 dark:to-purple-800 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                    ✓
                   </span>
-                  100 Documents
+                  10 documents
                 </li>
-                <li className="flex items-center gap-3 text-sm font-medium">
-                  <span className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-200 to-purple-200 dark:from-blue-800 dark:to-purple-800 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full" />
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                    ✓
                   </span>
-                  2,000 Questions/Month
+                  100 questions / month
                 </li>
               </ul>
-              <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all rounded-lg font-medium">
-                Upgrade Now
-              </Button>
+              <Link href="/signup" className="mt-8 block">
+                <Button
+                  variant="outline"
+                  className="w-full rounded-2xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
+                >
+                  Get started
+                </Button>
+              </Link>
             </div>
 
-            {/* Business Plan */}
-            <div className="rounded-2xl p-8 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 hover:shadow-xl transition-all hover:scale-105 duration-300">
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-2">Business</h3>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-5xl font-bold">$49</span>
-                  <span className="text-slate-600 dark:text-slate-400">
-                    /month
-                  </span>
-                </div>
+            <div className="relative rounded-[28px] border-2 border-violet-200 bg-gradient-to-br from-violet-50 via-white to-indigo-50 p-8 shadow-[0_24px_60px_rgba(99,102,241,0.12)]">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-500 to-indigo-600 px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-white">
+                Most popular
               </div>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-sm">
-                  <span className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-green-600 rounded-full" />
+              <h3 className="text-2xl font-bold text-slate-900">Pro</h3>
+              <div className="mt-6 flex items-end gap-2">
+                <span className="text-5xl font-black tracking-[-0.05em] text-slate-950">
+                  $19
+                </span>
+                <span className="pb-2 text-slate-500">/month</span>
+              </div>
+              <ul className="mt-8 space-y-4 text-sm text-slate-600">
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-100 text-violet-700">
+                    ✓
                   </span>
-                  20 Chatbots
+                  5 chatbots
                 </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <span className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-green-600 rounded-full" />
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-100 text-violet-700">
+                    ✓
                   </span>
-                  500 Documents
+                  100 documents
                 </li>
-                <li className="flex items-center gap-3 text-sm">
-                  <span className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-green-600 rounded-full" />
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-violet-100 text-violet-700">
+                    ✓
                   </span>
-                  10,000 Questions/Month
+                  2,000 questions / month
                 </li>
               </ul>
-              <Button
-                variant="outline"
-                className="w-full border-slate-300 dark:border-slate-600 rounded-lg"
-              >
-                Contact Sales
-              </Button>
+              <Link href="/signup" className="mt-8 block">
+                <Button className="w-full rounded-2xl bg-gradient-to-r from-violet-500 via-indigo-500 to-purple-600 text-white shadow-lg shadow-violet-200 hover:brightness-110">
+                  Upgrade now
+                </Button>
+              </Link>
+            </div>
+
+            <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_20px_50px_rgba(120,96,78,0.06)]">
+              <h3 className="text-2xl font-bold text-slate-900">Business</h3>
+              <div className="mt-6 flex items-end gap-2">
+                <span className="text-5xl font-black tracking-[-0.05em] text-slate-950">
+                  $49
+                </span>
+                <span className="pb-2 text-slate-500">/month</span>
+              </div>
+              <ul className="mt-8 space-y-4 text-sm text-slate-600">
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                    ✓
+                  </span>
+                  20 chatbots
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                    ✓
+                  </span>
+                  500 documents
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                    ✓
+                  </span>
+                  10,000 questions / month
+                </li>
+              </ul>
+              <Link href="/signup" className="mt-8 block">
+                <Button
+                  variant="outline"
+                  className="w-full rounded-2xl border-slate-200 bg-white text-slate-900 hover:bg-slate-50"
+                >
+                  Contact sales
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section with Parallax */}
-      <section className="relative isolate py-20 lg:py-24 overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+      <section className="relative isolate overflow-hidden bg-gradient-to-r from-[#0d1b3f] via-[#23163d] to-[#4a1d52] py-20 lg:py-24">
         <div
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0 opacity-20"
           style={{
-            backgroundImage: `
-              radial-gradient(circle at 30% 60%, rgba(255, 255, 255, 0.5) 0%, transparent 50%),
-              radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.5) 0%, transparent 50%)
-            `,
-            transform: `translateY(${scrollY * 0.6}px)`,
+            background:
+              "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, transparent 40%)",
           }}
         />
 
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-            Ready to transform your support?
+        <div className="relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-black tracking-[-0.06em] text-white sm:text-5xl">
+            Ready to turn support into a product advantage?
           </h2>
-          <p className="text-xl text-blue-100 mb-10">
-            Join thousands of companies delivering instant, accurate support
-            with AI.
+          <p className="mt-5 text-xl text-slate-200">
+            Give your customers instant answers from the knowledge they already
+            trust.
           </p>
-          <Link href="/signup">
-            <Button
-              size="lg"
-              className="bg-white text-blue-600 hover:bg-slate-100 shadow-lg hover:shadow-xl px-8 py-6 text-lg rounded-xl font-semibold transition-all"
-            >
-              Start for Free — No Card Required
-            </Button>
-          </Link>
+          <div className="mt-10 flex justify-center">
+            <Link href="/signup">
+              <Button
+                size="lg"
+                className="rounded-2xl bg-gradient-to-r from-violet-500 via-indigo-500 to-purple-600 px-8 py-6 text-base font-semibold text-white shadow-[0_18px_40px_rgba(99,102,241,0.35)] hover:brightness-110"
+              >
+                Start for free
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
