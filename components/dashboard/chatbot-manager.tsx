@@ -1,48 +1,61 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MessageSquare, Plus, Pencil, Trash2, ExternalLink, X } from 'lucide-react';
-import type { Chatbot } from '@/lib/types';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  MessageSquare,
+  Plus,
+  Pencil,
+  Trash2,
+  ExternalLink,
+  X,
+} from "lucide-react";
+import type { Chatbot } from "@/lib/types";
 
 const paletteColors = [
-  '#4f46e5',
-  '#7c3aed',
-  '#ec4899',
-  '#f97316',
-  '#f59e0b',
-  '#10b981',
-  '#14b8a6',
-  '#0ea5e9',
-  '#3b82f6',
-  '#1f2937',
-  '#64748b',
-  '#f8fafc',
+  "#4f46e5",
+  "#7c3aed",
+  "#ec4899",
+  "#f97316",
+  "#f59e0b",
+  "#10b981",
+  "#14b8a6",
+  "#0ea5e9",
+  "#3b82f6",
+  "#1f2937",
+  "#64748b",
+  "#f8fafc",
 ];
 
 const chatbotFormSchema = z.object({
-  name: z.string().min(1, 'Name is required').max(100),
-  description: z.string().max(500).optional().or(z.literal('')),
-  systemPrompt: z.string().max(4000).optional().or(z.literal('')),
-  welcomeMessage: z.string().max(300).optional().or(z.literal('')),
-  primaryColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Must be a hex color like #4f46e5'),
+  name: z.string().min(1, "Name is required").max(100),
+  description: z.string().max(500).optional().or(z.literal("")),
+  systemPrompt: z.string().max(4000).optional().or(z.literal("")),
+  welcomeMessage: z.string().max(300).optional().or(z.literal("")),
+  primaryColor: z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/, "Must be a hex color like #4f46e5"),
 });
 
 type ChatbotFormValues = z.infer<typeof chatbotFormSchema>;
 
-export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[] }) {
+export function ChatbotManager({
+  initialChatbots,
+}: {
+  initialChatbots: Chatbot[];
+}) {
   const [chatbots, setChatbots] = useState(initialChatbots);
   const [editing, setEditing] = useState<Chatbot | null>(null);
   const [showForm, setShowForm] = useState(false);
-  const [formError, setFormError] = useState('');
+  const [formError, setFormError] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const {
@@ -55,64 +68,66 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
   } = useForm<ChatbotFormValues>({
     resolver: zodResolver(chatbotFormSchema),
     defaultValues: {
-      name: '',
-      description: '',
+      name: "",
+      description: "",
       systemPrompt:
         "You are a helpful customer support assistant. Answer questions using the provided company knowledge. If the answer cannot be found in the provided knowledge, say that you don't know. Never invent company policies, prices or facts.",
-      welcomeMessage: 'Hello! How can I help you?',
-      primaryColor: '#4f46e5',
+      welcomeMessage: "Hello! How can I help you?",
+      primaryColor: "#4f46e5",
     },
   });
 
-  const selectedPrimaryColor = watch('primaryColor') || '#4f46e5';
+  const selectedPrimaryColor = watch("primaryColor") || "#4f46e5";
 
   function openCreate() {
     setEditing(null);
-    setFormError('');
+    setFormError("");
     reset({
-      name: '',
-      description: '',
+      name: "",
+      description: "",
       systemPrompt:
         "You are a helpful customer support assistant. Answer questions using the provided company knowledge. If the answer cannot be found in the provided knowledge, say that you don't know. Never invent company policies, prices or facts.",
-      welcomeMessage: 'Hello! How can I help you?',
-      primaryColor: '#4f46e5',
+      welcomeMessage: "Hello! How can I help you?",
+      primaryColor: "#4f46e5",
     });
     setShowForm(true);
   }
 
   function openEdit(chatbot: Chatbot) {
     setEditing(chatbot);
-    setFormError('');
+    setFormError("");
     reset({
       name: chatbot.name,
-      description: chatbot.description ?? '',
-      systemPrompt: chatbot.system_prompt ?? '',
-      welcomeMessage: chatbot.welcome_message ?? '',
-      primaryColor: chatbot.primary_color ?? '#4f46e5',
+      description: chatbot.description ?? "",
+      systemPrompt: chatbot.system_prompt ?? "",
+      welcomeMessage: chatbot.welcome_message ?? "",
+      primaryColor: chatbot.primary_color ?? "#4f46e5",
     });
     setShowForm(true);
   }
 
   async function onSubmit(values: ChatbotFormValues) {
-    setFormError('');
+    setFormError("");
     const isEdit = Boolean(editing);
-    const url = isEdit ? `/api/chatbots/${editing!.id}` : '/api/chatbots';
-    const method = isEdit ? 'PATCH' : 'POST';
+    const url = isEdit ? `/api/chatbots/${editing!.id}` : "/api/chatbots";
+    const method = isEdit ? "PATCH" : "POST";
 
     const res = await fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
     const data = await res.json();
 
     if (!res.ok) {
-      setFormError(data.error || 'Something went wrong');
+      setFormError(data.error || "Something went wrong");
       return;
     }
 
     if (isEdit) {
-      setChatbots((prev) => prev.map((c) => (c.id === data.chatbot.id ? data.chatbot : c)));
+      setChatbots((prev) =>
+        prev.map((c) => (c.id === data.chatbot.id ? data.chatbot : c)),
+      );
     } else {
       setChatbots((prev) => [data.chatbot, ...prev]);
     }
@@ -123,7 +138,7 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
 
   async function handleDelete(id: string) {
     setDeletingId(id);
-    const res = await fetch(`/api/chatbots/${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/chatbots/${id}`, { method: "DELETE" });
     if (res.ok) {
       setChatbots((prev) => prev.filter((c) => c.id !== id));
     }
@@ -135,7 +150,9 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2">Chatbots</h1>
-          <p className="text-slate-600 dark:text-slate-400">Create and manage your AI chatbots</p>
+          <p className="text-slate-600 dark:text-slate-400">
+            Create and manage your AI chatbots
+          </p>
         </div>
         <Button className="gap-2" onClick={openCreate}>
           <Plus className="w-4 h-4" />
@@ -146,8 +163,13 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
       {showForm && (
         <Card className="mb-8">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>{editing ? 'Edit Chatbot' : 'New Chatbot'}</CardTitle>
-            <Button variant="ghost" size="icon" onClick={() => setShowForm(false)} aria-label="Close form">
+            <CardTitle>{editing ? "Edit Chatbot" : "New Chatbot"}</CardTitle>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowForm(false)}
+              aria-label="Close form"
+            >
               <X className="w-4 h-4" />
             </Button>
           </CardHeader>
@@ -160,38 +182,61 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
               )}
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Acme Support" {...register('name')} />
-                {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
+                <Input
+                  id="name"
+                  placeholder="Acme Support"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <p className="text-sm text-red-600">{errors.name.message}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
-                <Input id="description" placeholder="AI assistant for customer support" {...register('description')} />
+                <Input
+                  id="description"
+                  placeholder="AI assistant for customer support"
+                  {...register("description")}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="systemPrompt">Instructions</Label>
-                <Textarea id="systemPrompt" rows={4} {...register('systemPrompt')} />
+                <Textarea
+                  id="systemPrompt"
+                  rows={4}
+                  {...register("systemPrompt")}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="welcomeMessage">Welcome message</Label>
-                <Input id="welcomeMessage" {...register('welcomeMessage')} />
+                <Input id="welcomeMessage" {...register("welcomeMessage")} />
               </div>
               <div className="space-y-3">
                 <Label htmlFor="primaryColor">Primary color</Label>
 
                 <div className="flex flex-wrap items-center gap-3">
                   {paletteColors.map((color) => {
-                    const isSelected = selectedPrimaryColor.toLowerCase() === color.toLowerCase();
+                    const isSelected =
+                      selectedPrimaryColor.toLowerCase() ===
+                      color.toLowerCase();
 
                     return (
                       <button
                         key={color}
                         type="button"
                         aria-label={`Select ${color}`}
-                        onClick={() => setValue('primaryColor', color, { shouldValidate: true, shouldDirty: true })}
+                        onClick={() =>
+                          setValue("primaryColor", color, {
+                            shouldValidate: true,
+                            shouldDirty: true,
+                          })
+                        }
                         className={[
-                          'h-10 w-10 rounded-full border-2 transition-all duration-200',
-                          isSelected ? 'scale-110 border-slate-900 shadow-md' : 'border-white hover:scale-105',
-                        ].join(' ')}
+                          "h-10 w-10 rounded-full border-2 transition-all duration-200",
+                          isSelected
+                            ? "scale-110 border-slate-900 shadow-md"
+                            : "border-white hover:scale-105",
+                        ].join(" ")}
                         style={{ backgroundColor: color }}
                       />
                     );
@@ -202,7 +247,12 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
                       id="primaryColor"
                       type="color"
                       value={selectedPrimaryColor}
-                      onChange={(event) => setValue('primaryColor', event.target.value, { shouldValidate: true, shouldDirty: true })}
+                      onChange={(event) =>
+                        setValue("primaryColor", event.target.value, {
+                          shouldValidate: true,
+                          shouldDirty: true,
+                        })
+                      }
                       className="h-full w-full cursor-pointer border-0 bg-transparent p-0 opacity-0"
                     />
                     <span
@@ -222,13 +272,21 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
                   <span className="text-xs text-slate-500">Chosen color</span>
                 </div>
 
-                {errors.primaryColor && <p className="text-sm text-red-600">{errors.primaryColor.message}</p>}
+                {errors.primaryColor && (
+                  <p className="text-sm text-red-600">
+                    {errors.primaryColor.message}
+                  </p>
+                )}
               </div>
               <div className="flex gap-3">
                 <Button type="submit" loading={isSubmitting}>
-                  {editing ? 'Save Changes' : 'Create Chatbot'}
+                  {editing ? "Save Changes" : "Create Chatbot"}
                 </Button>
-                <Button type="button" variant="outline" onClick={() => setShowForm(false)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowForm(false)}
+                >
                   Cancel
                 </Button>
               </div>
@@ -263,19 +321,23 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
                 <div className="flex items-center gap-3">
                   <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-semibold"
-                    style={{ backgroundColor: chatbot.primary_color || '#4f46e5' }}
+                    style={{
+                      backgroundColor: chatbot.primary_color || "#4f46e5",
+                    }}
                   >
                     {chatbot.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <CardTitle>{chatbot.name}</CardTitle>
-                    <p className="text-xs text-slate-500 mt-1 capitalize">{chatbot.status}</p>
+                    <p className="text-xs text-slate-500 mt-1 capitalize">
+                      {chatbot.status}
+                    </p>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2">
-                  {chatbot.description || 'No description'}
+                  {chatbot.description || "No description"}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Link href={`/chat?chatbotId=${chatbot.id}`}>
@@ -283,7 +345,12 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
                       <ExternalLink className="w-3.5 h-3.5" /> Test
                     </Button>
                   </Link>
-                  <Button size="sm" variant="outline" className="gap-1" onClick={() => openEdit(chatbot)}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="gap-1"
+                    onClick={() => openEdit(chatbot)}
+                  >
                     <Pencil className="w-3.5 h-3.5" /> Edit
                   </Button>
                   <Button
