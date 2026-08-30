@@ -13,6 +13,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MessageSquare, Plus, Pencil, Trash2, ExternalLink, X } from 'lucide-react';
 import type { Chatbot } from '@/lib/types';
 
+const paletteColors = [
+  '#4f46e5',
+  '#7c3aed',
+  '#ec4899',
+  '#f97316',
+  '#f59e0b',
+  '#10b981',
+  '#14b8a6',
+  '#0ea5e9',
+  '#3b82f6',
+  '#1f2937',
+  '#64748b',
+  '#f8fafc',
+];
+
 const chatbotFormSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100),
   description: z.string().max(500).optional().or(z.literal('')),
@@ -34,6 +49,8 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<ChatbotFormValues>({
     resolver: zodResolver(chatbotFormSchema),
@@ -46,6 +63,8 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
       primaryColor: '#4f46e5',
     },
   });
+
+  const selectedPrimaryColor = watch('primaryColor') || '#4f46e5';
 
   function openCreate() {
     setEditing(null);
@@ -156,9 +175,53 @@ export function ChatbotManager({ initialChatbots }: { initialChatbots: Chatbot[]
                 <Label htmlFor="welcomeMessage">Welcome message</Label>
                 <Input id="welcomeMessage" {...register('welcomeMessage')} />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="primaryColor">Primary color</Label>
-                <Input id="primaryColor" className="w-32" placeholder="#4f46e5" {...register('primaryColor')} />
+
+                <div className="flex flex-wrap items-center gap-3">
+                  {paletteColors.map((color) => {
+                    const isSelected = selectedPrimaryColor.toLowerCase() === color.toLowerCase();
+
+                    return (
+                      <button
+                        key={color}
+                        type="button"
+                        aria-label={`Select ${color}`}
+                        onClick={() => setValue('primaryColor', color, { shouldValidate: true, shouldDirty: true })}
+                        className={[
+                          'h-10 w-10 rounded-full border-2 transition-all duration-200',
+                          isSelected ? 'scale-110 border-slate-900 shadow-md' : 'border-white hover:scale-105',
+                        ].join(' ')}
+                        style={{ backgroundColor: color }}
+                      />
+                    );
+                  })}
+
+                  <label className="relative flex h-10 w-16 cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-slate-300 bg-white shadow-sm">
+                    <input
+                      id="primaryColor"
+                      type="color"
+                      value={selectedPrimaryColor}
+                      onChange={(event) => setValue('primaryColor', event.target.value, { shouldValidate: true, shouldDirty: true })}
+                      className="h-full w-full cursor-pointer border-0 bg-transparent p-0 opacity-0"
+                    />
+                    <span
+                      className="pointer-events-none absolute inset-1 rounded-md border border-slate-200"
+                      style={{ backgroundColor: selectedPrimaryColor }}
+                    />
+                  </label>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Input
+                    readOnly
+                    value={selectedPrimaryColor}
+                    className="w-32 bg-slate-50 text-slate-700"
+                    aria-label="Selected primary color"
+                  />
+                  <span className="text-xs text-slate-500">Chosen color</span>
+                </div>
+
                 {errors.primaryColor && <p className="text-sm text-red-600">{errors.primaryColor.message}</p>}
               </div>
               <div className="flex gap-3">
